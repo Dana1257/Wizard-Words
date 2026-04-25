@@ -1,0 +1,466 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f1e8;
+  color: #252525;
+}
+
+.app-header {
+  text-align: center;
+  padding: 28px 16px;
+  background: #4b2e83;
+  color: white;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.4rem;
+}
+
+.app-header p {
+  margin: 8px 0 0;
+  font-size: 1rem;
+}
+
+.app-shell {
+  width: min(1200px, 96%);
+  margin: 24px auto 60px;
+}
+
+.card {
+  background: white;
+  border: 2px solid #d7c9a8;
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  margin-top: 0;
+  color: #3a2365;
+}
+
+h3 {
+  color: #4b2e83;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tab-button,
+button,
+.import-label {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #e4ddf2;
+  color: #2b174d;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab-button.active,
+.primary-button {
+  background: #4b2e83;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.help-text {
+  line-height: 1.5;
+}
+
+.warning-text {
+  background: #fff4cf;
+  border-left: 5px solid #d19b00;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+textarea,
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #d7c9a8;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="file"] {
+  display: block;
+  margin: 12px 0;
+}
+
+.pdf-import-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0 8px;
+}
+
+.pdf-sample-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 2px solid #d7c9a8;
+  border-radius: 12px;
+  background: #fbfaf6;
+  color: #2b174d;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.pdf-sample-card:hover,
+.pdf-sample-card:focus-visible {
+  border-color: #4b2e83;
+  transform: translateY(-1px);
+}
+
+.pdf-sample-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 68px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff8e7 0%, #ead9af 100%);
+  border: 1px solid #cbb27a;
+  color: #6f4d00;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+}
+
+.pdf-sample-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pdf-sample-text span {
+  color: #4b2e83;
+  text-decoration: underline;
+}
+
+.pdf-upload-area {
+  flex: 1 1 260px;
+}
+
+.pdf-upload-area input[type="file"] {
+  width: 100%;
+  margin: 0;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.example-box,
+.status-box {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  white-space: pre-wrap;
+}
+
+.status-box {
+  min-height: 70px;
+}
+
+.summary-box {
+  background: #f8f5ef;
+  border: 1px solid #d7c9a8;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.save-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.game-top-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.word-bank-box {
+  background: #f8f5ef;
+  border: 2px dashed #b49c6c;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  height: auto;
+  min-height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.word-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9ddff;
+  border: 1px solid #c7b5e8;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: bold;
+  font-size: 0.98rem;
+  line-height: 1;
+  margin: 0;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.word-chip.used {
+  text-decoration: line-through;
+  opacity: 0.45;
+  background: transparent;
+  color: #555;
+}
+
+/* Game layout: keep word bank visible and sticky on desktop, stacked on mobile */
+#gameSection {
+  display: grid;
+  grid-template-columns: minmax(260px, 38%) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.game-top-bar {
+  grid-column: 1 / -1;
+}
+
+.word-bank-box {
+  position: sticky;
+  top: 16px;
+  align-self: start;
+}
+
+/* When there are many words, reduce spacing and chip size */
+.word-bank-box.many-words .word-bank {
+  gap: 6px;
+}
+
+.word-bank-box.many-words .word-chip {
+  padding: 5px 8px;
+  font-size: 0.92rem;
+}
+
+/* For very many words, allow internal scrolling and tighter chips */
+.word-bank-box.very-many-words .word-bank {
+  gap: 5px;
+}
+
+.word-bank-box.very-many-words .word-chip {
+  padding: 4px 7px;
+  font-size: 0.86rem;
+}
+
+.definition-item {
+  border-bottom: 1px solid #ddd;
+  padding: 14px 0;
+}
+
+.definition-text {
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.answer-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.answer-input {
+  max-width: 420px;
+  flex: 1 1 320px;
+}
+
+.answer-row button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #e4ddf2;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.answer-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedback {
+  font-weight: bold;
+}
+
+.feedback.correct {
+  color: #167a2f;
+}
+
+.feedback.wrong {
+  color: #c62828;
+}
+
+.saved-list {
+  margin-top: 16px;
+}
+
+.saved-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid #d7c9a8;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #fbfaf6;
+}
+
+.saved-item-title {
+  font-weight: bold;
+}
+
+.saved-item-small {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.library-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.import-label input {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  width: min(460px, 92%);
+  text-align: center;
+}
+
+.modal-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  /* Keep below the modal (modal uses z-index:20) so modal remains on top */
+  z-index: 15;
+}
+
+@media (max-width: 800px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .save-area {
+    flex-direction: column;
+  }
+
+  .game-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .answer-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .answer-input {
+    max-width: 100%;
+  }
+
+  #gameSection {
+    grid-template-columns: 1fr;
+  }
+
+  .word-bank-box {
+    position: static;
+    margin-bottom: 12px;
+  }
+
+  .pdf-import-row {
+    align-items: stretch;
+  }
+
+  .pdf-sample-card {
+    width: 100%;
+  }
+}

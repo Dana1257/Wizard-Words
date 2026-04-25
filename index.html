@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Wizard Words Fill-in-the-Blank Game</title>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- PDF.js for browser PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+  <header class="app-header">
+    <h1>Wizard Words</h1>
+    <p>Build a fill-in-the-blank vocabulary game from a PDF, teacher list, or two pasted lists.</p>
+  </header>
+
+  <main class="app-shell">
+
+    <section class="card">
+      <h2>1. Choose Setup Method</h2>
+
+      <div class="tabs">
+        <button class="tab-button active" data-tab="pdfTab">PDF Import</button>
+        <button class="tab-button" data-tab="teacherTab">Teacher/Admin Mode</button>
+        <button class="tab-button" data-tab="twoBoxTab">Two-Box Paste Mode</button>
+        <button class="tab-button" data-tab="savedTab">Saved Library</button>
+      </div>
+
+      <!-- PDF IMPORT -->
+      <div id="pdfTab" class="tab-panel active">
+        <h3>Import from PDF</h3>
+
+        <p class="help-text">
+          Upload a text-based PDF with clear headings like <strong>Words:</strong> and <strong>Definitions:</strong>.
+          The first word will be matched with the first definition, the second word with the second definition, and so on.
+          For best results, the PDF should only contain the vocabulary words and their matching definitions.
+          Do not include extra headings, instructions, page labels, answer keys, notes, or unrelated text between the <strong>Words</strong> section and the 
+          <strong>Definitions</strong> section.
+        </p>
+
+        <p class="warning-text">
+          Scanned image PDFs cannot be read unless OCR is added later.
+        </p>
+
+        <div class="pdf-import-row">
+          <a href="Example.pdf" target="_blank" rel="noopener" class="pdf-sample-card">
+            <span class="pdf-sample-thumb" aria-hidden="true">PDF</span>
+            <span class="pdf-sample-text">
+              <strong>Sample PDF Format</strong>
+              <span>View sample PDF format</span>
+            </span>
+          </a>
+
+          <div class="pdf-upload-area">
+            <input type="file" id="pdfFileInput" accept="application/pdf" />
+          </div>
+        </div>
+
+        <button id="extractPdfButton">Extract PDF</button>
+
+        <pre id="pdfStatus" class="status-box"></pre>
+      </div>
+
+      <!-- TEACHER MODE -->
+      <div id="teacherTab" class="tab-panel">
+        <h3>Teacher/Admin Mode</h3>
+
+        <p class="help-text">
+          Paste one pair per line. Use this format:
+        </p>
+
+        <pre class="example-box">Apple = a round fruit that grows on trees
+River = a large stream of water</pre>
+
+        <textarea id="teacherInput" rows="12" placeholder="WORD = definition"></textarea>
+
+        <button id="loadTeacherButton">Load Teacher List</button>
+      </div>
+
+      <!-- TWO BOX MODE -->
+      <div id="twoBoxTab" class="tab-panel">
+        <h3>Two-Box Paste Mode</h3>
+
+        <p class="help-text">
+          Paste words in the left box and definitions in the right box. Line 1 matches line 1, line 2 matches line 2, and so on.
+        </p>
+
+        <div class="two-column">
+          <div>
+            <label for="wordsBox">Words</label>
+            <textarea id="wordsBox" rows="12" placeholder="Apple&#10;River&#10;Mountain"></textarea>
+          </div>
+
+          <div>
+            <label for="definitionsBox">Definitions</label>
+            <textarea id="definitionsBox" rows="12" placeholder="a round fruit that grows on trees&#10;a large stream of water&#10;a very high area of land"></textarea>
+          </div>
+        </div>
+
+        <button id="loadTwoBoxButton">Load Two-Box List</button>
+      </div>
+
+      <!-- SAVED LIBRARY -->
+      <div id="savedTab" class="tab-panel">
+        <h3>Saved Setup Library</h3>
+
+        <p class="help-text">
+          Save up to 500 vocabulary games on this browser using localStorage.
+        </p>
+
+        <div class="library-actions">
+          <button id="refreshLibraryButton">Refresh Library</button>
+          <button id="exportLibraryButton">Export Library JSON</button>
+
+          <label class="import-label">
+            Import Library JSON
+            <input type="file" id="importLibraryInput" accept="application/json" />
+          </label>
+        </div>
+
+        <div id="savedLibraryList" class="saved-list"></div>
+      </div>
+    </section>
+
+    <section class="card" id="previewCard">
+      <h2>2. Setup</h2>
+
+      <div id="setupSummary" class="summary-box">
+        No setup loaded yet.
+      </div>
+
+      <div class="save-area">
+        <input id="setupTitleInput" type="text" placeholder="Optional title for saving this setup" />
+        <button id="saveSetupButton">Save Setup</button>
+      </div>
+
+      <button id="startGameButton" class="primary-button" disabled>Start Game</button>
+    </section>
+
+    <section id="gameSection" class="card hidden">
+      <div class="game-top-bar">
+        <h2>3. Play</h2>
+        <button id="leaveGameButton">Leave Game</button>
+      </div>
+
+      <section class="word-bank-box">
+        <h3>Words</h3>
+        <div id="wordBank" class="word-bank"></div>
+      </section>
+
+      <section class="definitions-box">
+        <h3>Definitions</h3>
+        <div id="definitionList"></div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- COMPLETION MODAL -->
+  <div id="completionModal" class="modal-overlay hidden">
+    <div class="modal">
+      <h2>Great job!</h2>
+      <p>You matched all the words correctly.</p>
+
+      <div class="modal-actions">
+        <button id="newRoundButton">Start New Round</button>
+        <button id="newGameButton">New Game</button>
+        <button id="answerSheetButton">Create PDF Answer Sheet</button>
+        <button id="modalLeaveButton">Leave Game</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
